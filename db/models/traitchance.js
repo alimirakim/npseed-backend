@@ -3,16 +3,17 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class CharTrait extends Model {
+  class TraitChance extends Model {
 
     static associate(models) {
-      this.belongsTo(models.Character, { foreignKey: "charId" })
+      this.belongsTo(models.Generator, { foreignKey: "genId" })
       this.belongsTo(models.Trait, { foreignKey: "traitId" })
       this.belongsTo(models.TraitType, { foreignKey: "traitTypeId" })
     }
-  };
-  CharTrait.init({
-    charId: {
+  }
+
+  TraitChance.init({
+    genId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -24,9 +25,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    chance: {
+      type: DataTypes.FLOAT,
+    }
   }, {
     sequelize,
-    modelName: 'CharTrait',
+    modelName: 'TraitChance',
   });
-  return CharTrait;
+  return TraitChance;
 };

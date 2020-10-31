@@ -4,24 +4,27 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Trait extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+
     static associate(models) {
-      // define association here
-      this.hasMany(models.TraitOption, {foreignKey: "traitId"})
-      this.hasMany(models.GenTrait, {foreignKey: "traitId"})
+      this.hasMany(models.TraitChance, {foreignKey: "traitId"})
       this.hasMany(models.CharTrait, {foreignKey: "traitId"})
+      this.belongsTo(models.TraitType, {foreignKey: "traitTypeId"})
+      // TODO check if this through thing works
+      this.belongsTo(models.User, { through: "CharTraits", foreignKey: "traitId" })
+      this.belongsTo(models.Character, { through: "CharTraits", foreignKey: "traitId" })
+      this.belongsTo(models.Category, { through: "TraitTypes", foreignKey: "categoryId" })
     }
   };
   Trait.init({
+    traitTypeId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     trait: {
-      type: DataTypes.STRING(40),
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-    },
+    }
   }, {
     sequelize,
     modelName: 'Trait',

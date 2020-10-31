@@ -3,20 +3,21 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Generator extends Model {
+  class Category extends Model {
 
     static associate(models) {
-      this.hasMany(models.TraitChance, {foreignKey: "genId"})
+      this.hasMany(models.TraitType, { foreignKey: 'categoryId' })
     }
   };
-  Generator.init({
-    title: {
+  Category.init({
+    category: {
       type: DataTypes.STRING(255),
       allowNull: false,
+      unique: true,
     }
   }, {
     sequelize,
-    modelName: 'Generator',
+    modelName: 'Category',
   });
-  return Generator;
+  return Category;
 };
