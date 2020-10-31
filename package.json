@@ -17,11 +17,11 @@
     "jsonwebtoken": "^8.5.1",
     "per-env": "^1.0.2",
     "pg": "^8.4.2",
+    "morgan": "^1.10.0",
     "sequelize": "^6.3.5"
   },
   "devDependencies": {
     "dotenv-cli": "^4.0.0",
-    "morgan": "^1.10.0",
     "nodemon": "^2.0.6",
     "sequelize-cli": "^6.2.0"
   },
