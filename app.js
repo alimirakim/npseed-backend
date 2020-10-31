@@ -3,9 +3,9 @@ const morgan = require('morgan')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const { ValidationError } = require('sequelize')
-const { environment } = require('./config')
-const frontendPort = 'http://localhost:3000'
+const { environment, origin } = require('./config')
 
+console.log("origin is...\n\n", origin)
 // Route imports
 const routes = require('./routes/routes')
 const userRoutes = require('./routes/users')
@@ -14,7 +14,7 @@ const app = express()
 
 // Setting up backend app
 app.use(morgan('dev'))
-app.use(cors({ origin: frontendPort }))
+app.use(cors({ origin }))
 app.use(cookieParser())
 app.use(express.json())
 // TODO Check how these work out. Diff between Twitter/Pokemon, understand why

@@ -10,5 +10,6 @@ module.exports = {
   jwtConfig: {
     secret: process.env.JWT_SECRET,
     expiresIn: process.env.JWT_EXPIRES_IN,
-  }
+  },
+  origin: process.env.FRONTEND_ORIGIN || 'http://localhost:3000'
 }
