@@ -10,10 +10,10 @@ module.exports = {
       },
       traitType: {
         allowNull: false,
-        type: Sequelize.STRING(40),
+        type: Sequelize.STRING(250),
         unique: true,
       },
-      categoryId: {
+      CategoryId: {
         type: Sequelize.INTEGER,
         references: { model: 'Categories' },
       },

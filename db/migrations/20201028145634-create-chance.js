@@ -1,30 +1,26 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('TraitChances', {
+    await queryInterface.createTable('Chances', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      genId: {
+      chance: {
+        allowNull: false,
+        type: Sequelize.FLOAT,
+      },
+      GeneratorId: {
         allowNull: false,
         references: { model: 'Generators' },
         type: Sequelize.INTEGER,
       },
-      traitId: {
+      TagId: {
         allowNull: false,
-        references: { model: 'Traits' },
+        references: { model: 'Tags' },
         type: Sequelize.INTEGER,
-      },
-      traitTypesId: {
-        allowNull: false,
-        references: { model: 'TraitTypes' },
-        type: Sequelize.INTEGER,
-      },
-      chance: {
-        type: Sequelize.FLOAT,
       },
       createdAt: {
         allowNull: false,
@@ -38,13 +34,13 @@ module.exports = {
       }
     })
 
-    await queryInterface.addConstraint("TraitChances", {
-      fields: ["genId", "traitTypeId", "traitId"],
+    await queryInterface.addConstraint("Chances", {
+      fields: ["GeneratorId", "TagId"],
       type: 'unique',
       // customIndex: true,
     })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('TraitChances');
+    await queryInterface.dropTable('Chances');
   }
 };

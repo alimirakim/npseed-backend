@@ -12,15 +12,15 @@ module.exports = {
       username: {
         allowNull: false,
         unique: true,
-        type: Sequelize.STRING(40),
+        type: Sequelize.STRING(50),
       },
       email: {
         unique: true,
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(250),
       },
       hashword: {
         allowNull: false,
-        type: Sequelize.STRING(255).BINARY,
+        type: Sequelize.STRING(250).BINARY,
       },
       createdAt: {
         allowNull: false,

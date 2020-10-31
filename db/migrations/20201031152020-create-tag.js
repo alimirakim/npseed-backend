@@ -1,26 +1,21 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('CharTraits', {
+    await queryInterface.createTable('Tags', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      CharacterId: {
+      tag: {
         allowNull: false,
-        references: { model: 'Characters' },
-        type: Sequelize.INTEGER,
+        unique: true,
+        type: Sequelize.STRING(250),
       },
-      TraitTypeId: {
+      TagTypeId: {
         allowNull: false,
-        references: { model: 'TraitTypes' },
-        type: Sequelize.INTEGER,
-      },
-      TraitId: {
-        allowNull: false,
-        references: { model: 'Traits' },
+        references: { model: 'TagTypes' },
         type: Sequelize.INTEGER,
       },
       createdAt: {
@@ -33,15 +28,9 @@ module.exports = {
         defaultValue: new Date(),
         type: Sequelize.DATE,
       }
-    })
-
-    await queryInterface.addConstraint("CharTraits", {
-      fields: ["CharacterId", "TraitTypeId"],
-      type: 'unique',
-      // customIndex: true, // TODO What is this for?
-    })
+    });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('CharTraits');
+    await queryInterface.dropTable('Tags');
   }
 };

@@ -6,18 +6,21 @@ module.exports = (sequelize, DataTypes) => {
   class Character extends Model {
 
     static associate(models) {
-      this.hasMany(models.CharTrait, {foreignKey: "charId"})
-      this.belongsTo(models.User, {foreignKey: "userId"})
+      this.hasMany(models.CharTrait)
+      this.belongsTo(models.User)
+
+      this.belongsToMany(models.Trait, { through: models.CharTrait })
     }
   };
   Character.init({
-    userId: {
-      type: DataTypes.INTEGER,
+    UserId: {
       allowNull: false,
+      type: DataTypes.INTEGER,
     },
     name: {
-      type: DataTypes.STRING(255),
       allowNull: false,
+      validate: { notEmpty: true },
+      type: DataTypes.STRING(250),
     },
   }, {
     sequelize,

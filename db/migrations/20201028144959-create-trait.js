@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Trait', {
+    await queryInterface.createTable('Traits', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,10 +10,9 @@ module.exports = {
       },
       trait: {
         allowNull: false,
-        unique: trait,
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(255),
       },
-      traitTypeId: {
+      TraitTypeId: {
         allowNull: false,
         references: { model: 'TraitTypes' },
         type: Sequelize.INTEGER,
@@ -29,9 +28,9 @@ module.exports = {
         type: Sequelize.DATE,
       }
     });
-  
+
     await queryInterface.addConstraint("Traits", {
-      fields: ["traitTypeId", "trait"],
+      fields: ["TraitTypeId", "trait"],
       type: 'unique',
     })
   },

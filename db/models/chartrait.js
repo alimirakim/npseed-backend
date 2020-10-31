@@ -6,23 +6,23 @@ module.exports = (sequelize, DataTypes) => {
   class CharTrait extends Model {
 
     static associate(models) {
-      this.belongsTo(models.Character, { foreignKey: "charId" })
-      this.belongsTo(models.Trait, { foreignKey: "traitId" })
-      this.belongsTo(models.TraitType, { foreignKey: "traitTypeId" })
+      this.belongsTo(models.Character)
+      this.belongsTo(models.Trait)
+      this.belongsTo(models.TraitType)
     }
   };
   CharTrait.init({
-    charId: {
-      type: DataTypes.INTEGER,
+    CharId: {
       allowNull: false,
+      type: DataTypes.INTEGER,
     },
-    traitId: {
-      type: DataTypes.INTEGER,
+    TraitId: {
       allowNull: false,
+      type: DataTypes.INTEGER,
     },
-    traitTypeId: {
-      type: DataTypes.INTEGER,
+    TraitTypeId: {
       allowNull: false,
+      type: DataTypes.INTEGER,
     },
   }, {
     sequelize,

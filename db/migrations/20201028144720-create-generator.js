@@ -10,9 +10,9 @@ module.exports = {
       },
       title: {
         allowNull: false,
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(250),
       },
-      userId: {
+      UserId: {
         references: { model: 'Users' },
         type: Sequelize.INTEGER,
       },

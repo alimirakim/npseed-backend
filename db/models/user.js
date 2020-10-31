@@ -8,23 +8,24 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
 
     static associate(models) {
-      this.hasMany(models.Character, { foreignKey: "userId" })
-      this.hasMany(models.Generator, { foreignKey: "userId" })
+      this.hasMany(models.Character)
+      this.hasMany(models.Generator)
     }
   }
   User.init({
     username: {
       allowNull: false,
       unique: true,
-      type: DataTypes.STRING(40),
+      type: DataTypes.STRING(50),
     },
     email: {
       unique: true,
-      type: DataTypes.STRING(255),
+      validate: { isEmail: true },
+      type: DataTypes.STRING(250),
     },
     hashword: {
       allowNull: false,
-      type: DataTypes.STRING(255).BINARY,
+      type: DataTypes.STRING(250).BINARY,
     },
   }, {
     sequelize,

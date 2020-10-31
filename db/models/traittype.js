@@ -6,22 +6,22 @@ module.exports = (sequelize, DataTypes) => {
   class TraitType extends Model {
 
     static associate(models) {
-      this.hasMany(models.Trait, { foreignKey: "traitTypeId" })
-      this.hasMany(models.TraitChance, { foreignKey: "traitTypeId" })
-      this.hasMany(models.CharTrait, { foreignKey: "traitTypeId" })
-      this.belongsTo(models.Category, { foreignKey: "categoryId" })
+      this.hasMany(models.Trait)
+      this.hasMany(models.CharTrait)
+      this.belongsTo(models.Category)
+
       // TODO Check if this 'through' works.
-      this.belongsTo(models.User, { through: "CharTraits", foreignKey: "traitTypeId" })
-      this.belongsTo(models.Character, { through: "CharTraits", foreignKey: "traitTypeId" })
+      this.belongsToMany(models.Character, { through: models.CharTrait })
     }
   };
   TraitType.init({
     traitType: {
       allowNull: false,
       unique: true,
-      type: DataTypes.STRING(40),
+      validate: { notEmpty: true },
+      type: DataTypes.STRING(250),
     },
-    categoryId: {
+    CategoryId: {
       allowNull: false,
       type: DataTypes.INTEGER,
     }

@@ -6,13 +6,14 @@ module.exports = (sequelize, DataTypes) => {
   class Generator extends Model {
 
     static associate(models) {
-      this.hasMany(models.TraitChance, {foreignKey: "genId"})
+      this.hasMany(models.Chance)
     }
   };
   Generator.init({
     title: {
-      type: DataTypes.STRING(255),
       allowNull: false,
+      validate: {notEmpty: true},
+      type: DataTypes.STRING(250),
     }
   }, {
     sequelize,
