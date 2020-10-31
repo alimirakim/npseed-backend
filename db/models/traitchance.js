@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class GenTrait extends Model {
+  class TraitChance extends Model {
 
     static associate(models) {
       this.belongsTo(models.Generator, { foreignKey: "genId" })
@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
 
-  GenTrait.init({
+  TraitChance.init({
     genId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -25,12 +25,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    odds: {
+    chance: {
       type: DataTypes.FLOAT,
     }
   }, {
     sequelize,
-    modelName: 'GenTrait',
+    modelName: 'TraitChance',
   });
-  return GenTrait;
+  return TraitChance;
 };

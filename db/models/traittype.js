@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       this.hasMany(models.Trait, { foreignKey: "traitTypeId" })
-      this.hasMany(models.GenTrait, { foreignKey: "traitTypeId" })
+      this.hasMany(models.TraitChance, { foreignKey: "traitTypeId" })
       this.hasMany(models.CharTrait, { foreignKey: "traitTypeId" })
       this.belongsTo(models.Category, { foreignKey: "categoryId" })
       // TODO Check if this 'through' works.

@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class Generator extends Model {
 
     static associate(models) {
-      this.hasMany(models.GenTrait, {foreignKey: "genId"})
+      this.hasMany(models.TraitChance, {foreignKey: "genId"})
     }
   };
   Generator.init({

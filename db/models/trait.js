@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class Trait extends Model {
 
     static associate(models) {
-      this.hasMany(models.GenTrait, {foreignKey: "traitId"})
+      this.hasMany(models.TraitChance, {foreignKey: "traitId"})
       this.hasMany(models.CharTrait, {foreignKey: "traitId"})
       this.belongsTo(models.TraitType, {foreignKey: "traitTypeId"})
       // TODO check if this through thing works
