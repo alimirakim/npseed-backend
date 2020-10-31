@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
 
     static associate(models) {
-      this.hasMany(models.Character, {foreignKey: "userId"})
-      this.hasMany(models.Generator, {foreignKey: "userId"})
+      this.hasMany(models.Character, { foreignKey: "userId" })
+      this.hasMany(models.Generator, { foreignKey: "userId" })
     }
   }
   User.init({
@@ -30,8 +30,8 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'User',
   });
-  
-      
+
+
   User.prototype.validatePassword = async function (password) {
     return await bcrypt.compareSync(password, this.hashword.toString())
   }

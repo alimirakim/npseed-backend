@@ -10,6 +10,9 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.GenTrait, { foreignKey: "traitTypeId" })
       this.hasMany(models.CharTrait, { foreignKey: "traitTypeId" })
       this.belongsTo(models.Category, { foreignKey: "categoryId" })
+      // TODO Check if this 'through' works.
+      this.belongsTo(models.User, { through: "CharTraits", foreignKey: "traitTypeId" })
+      this.belongsTo(models.Character, { through: "CharTraits", foreignKey: "traitTypeId" })
     }
   };
   TraitType.init({
