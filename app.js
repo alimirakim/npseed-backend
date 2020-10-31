@@ -7,7 +7,7 @@ const { environment, origin } = require('./config')
 
 console.log("origin is...\n\n", origin)
 // Route imports
-const routes = require('./routes/routes')
+// const routes = require('./routes/routes')
 const userRoutes = require('./routes/users')
 
 const app = express()
