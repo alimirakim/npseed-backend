@@ -12,15 +12,19 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING(255),
       },
+      userId: {
+        references: { model: 'Users' },
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
         defaultValue: new Date(),
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
         defaultValue: new Date(),
+        type: Sequelize.DATE,
       }
     });
   },

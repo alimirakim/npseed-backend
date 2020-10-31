@@ -4,30 +4,25 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class CharTrait extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+
     static associate(models) {
-      // define association here
-      this.belongsTo(models.Character, {foreignKey: "charId"})
-      this.belongsTo(models.Trait, {foreignKey: "traitId"})
-      this.belongsTo(models.TraitOption, {foreignKey: "traitOptionId"})
+      this.belongsTo(models.Character, { foreignKey: "charId" })
+      this.belongsTo(models.Trait, { foreignKey: "traitId" })
+      this.belongsTo(models.TraitType, { foreignKey: "traitTypeId" })
     }
   };
   CharTrait.init({
     charId: {
-      allowNull: false,
       type: DataTypes.INTEGER,
+      allowNull: false,
     },
     traitId: {
-      allowNull: false,
       type: DataTypes.INTEGER,
+      allowNull: false,
     },
-    traitOptionId: {
-      allowNull: false,
+    traitTypeId: {
       type: DataTypes.INTEGER,
+      allowNull: false,
     },
   }, {
     sequelize,

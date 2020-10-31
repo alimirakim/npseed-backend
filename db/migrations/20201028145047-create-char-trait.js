@@ -10,35 +10,35 @@ module.exports = {
       },
       charId: {
         allowNull: false,
-        type: Sequelize.INTEGER,
         references: { model: 'Characters' },
+        type: Sequelize.INTEGER,
+      },
+      traitTypeId: {
+        allowNull: false,
+        references: { model: 'TraitTypes' },
+        type: Sequelize.INTEGER,
       },
       traitId: {
         allowNull: false,
-        type: Sequelize.INTEGER,
         references: { model: 'Traits' },
-      },
-      traitOptionId: {
-        allowNull: false,
         type: Sequelize.INTEGER,
-        references: { model: 'TraitOptions' },
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
         defaultValue: new Date(),
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
         defaultValue: new Date(),
+        type: Sequelize.DATE,
       }
     })
 
     await queryInterface.addConstraint("CharTraits", {
-      fields: ["charId", "traitId"],
+      fields: ["charId", "traitTypeId"],
       type: 'unique',
-      customIndex: true,
+      // customIndex: true, // TODO What is this for?
     })
   },
   down: async (queryInterface, Sequelize) => {

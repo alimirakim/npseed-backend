@@ -11,26 +11,26 @@ module.exports = {
       },
       username: {
         allowNull: false,
-        type: Sequelize.STRING(40),
         unique: true,
+        type: Sequelize.STRING(40),
       },
       email: {
-        type: Sequelize.STRING(255),
         unique: true,
+        type: Sequelize.STRING(255),
       },
       hashword: {
         allowNull: false,
-        type: Sequelize.STRING(60).BINARY,
+        type: Sequelize.STRING(255).BINARY,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
         defaultValue: new Date(),
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
         defaultValue: new Date(),
+        type: Sequelize.DATE,
       }
     });
   },
