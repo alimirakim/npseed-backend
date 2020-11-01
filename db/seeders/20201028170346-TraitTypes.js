@@ -3,12 +3,14 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert("TraitTypes", [
-      { categoryId: 1, traitType: "race" },
-      { categoryId: 1, traitType: "age" },
-      { categoryId: 1, traitType: "gender" },
-      { categoryId: 1, traitType: "occupation" },
-      { categoryId: 1, traitType: "origin" },
-      { categoryId: 1, traitType: "location" },
+      { CategoryId: 1, traitType: "race" },
+      { CategoryId: 1, traitType: "age" },
+      { CategoryId: 1, traitType: "gender" },
+      { CategoryId: 1, traitType: "occupation" },
+      { CategoryId: 1, traitType: "origin" },
+      { CategoryId: 1, traitType: "location" },
+      { CategoryId: 2, traitType: "hair"},
+      { CategoryId: 2, traitType: "eyes"},
     ])
   },
 

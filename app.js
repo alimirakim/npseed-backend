@@ -7,8 +7,13 @@ const { environment, origin } = require('./config')
 
 console.log("origin is...\n\n", origin)
 // Route imports
-// const routes = require('./routes/routes')
-const userRoutes = require('./routes/users')
+// const { router, usersRouter, charRouter } = require('./routes')
+const { router } = require('./routes/routes')
+const { userRouter } = require('./routes/users')
+const { charRouter } = require('./routes/characters')
+const { catRouter } = require('./routes/categories')
+// TODO Why can't this work even if .config can
+// const charRoutes = require('./routes')
 
 const app = express()
 
@@ -18,14 +23,16 @@ app.use(cors({ origin }))
 app.use(cookieParser())
 app.use(express.json())
 // TODO Check how these work out. Diff between Twitter/Pokemon, understand why
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: false }))
 // app.use(static(path.join(__dirname, 'public')))
 
+
 // Routes
-app.use(userRoutes)
-// app.get('/', (req, res) => {
-// res.send('Testing express')
-// })
+app.use(router)
+app.use("/characters", charRouter)
+app.use("/users", userRouter)
+app.use("/categories", catRouter)
+
 
 // 404 Catch unhandled requests and pass to error handler
 app.use((req, res, next) => {
@@ -35,28 +42,19 @@ app.use((req, res, next) => {
   next(err)
 })
 
-// Error handler logs errors
-app.use((err, req, res, next) => {
-  if (environment === 'production') {
-    // TODO
-  } else {
-    console.error(err)
-  }
-  next(err)
-})
-
 // Handle 404 error
 app.use((err, req, res, next) => {
   if (err.status === 404) {
     res.status(404)
-    res.render('page-not-found', {tite: '404 Not Found'})
+    res.render('page-not-found', { tite: '404 Not Found' })
   } else {
-    next(err )
+    next(err)
   }
 })
 
 // Handle sequelize errors
 app.use((err, req, res, next) => {
+  console.log("we got sequel error", err.errors)
   if (err instanceof ValidationError) {
     err.errors = err.errors.map((e) => e.message)
     err.title = "Sequelize Error >:["
@@ -66,6 +64,7 @@ app.use((err, req, res, next) => {
 
 // Handle all other errors
 app.use((err, req, res, next) => {
+  (console.log("we got other error", err.errors))
   err.status = (err.status || 500)
   const isProduction = environment === 'production'
   res.status(err.status).json({

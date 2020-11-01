@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.User)
 
       this.belongsToMany(models.Trait, { through: models.CharTrait })
+      this.belongsToMany(models.TraitType, {through: models.CharTrait})
     }
   };
   Character.init({

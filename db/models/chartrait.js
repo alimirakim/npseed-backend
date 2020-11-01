@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   CharTrait.init({
-    CharId: {
+    CharacterId: {
       allowNull: false,
       type: DataTypes.INTEGER,
     },

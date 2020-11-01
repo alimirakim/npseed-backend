@@ -8,9 +8,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.hasMany(models.TraitType)
       
-      this.belongsToMany(models.TraitType, {through: 'CatTraitTypes'})
+      // this.belongsToMany(models.TraitType, {through: 'CatTraitTypes'})
       this.belongsToMany(models.Trait, {through: 'CatTraits'})
-      this.belongsToMany(models.CharTrait, {through: 'CatCharTraits'})
+      // this.belongsToMany(models.CharTrait, {through: 'CatCharTraits'})
     }
   };
   Category.init({

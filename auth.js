@@ -14,14 +14,12 @@ function makeToken(user) {
 }
 
 
-
-async function getToken(req, res, next) {
+async function checkToken(req, res, next) {
   const { token } = req
   if (!token) return next({ status: 401, message: 'i need token :C ' })
 
   return jwt.verify(token, secret, null, async (err, payload) => {
     if (err) {
-      // err.status = 401 // twitter clone
       err.status = 401
       err.title = "401 Bad Token"
       return next(err)
@@ -42,7 +40,7 @@ async function getToken(req, res, next) {
   })
 }
 
-const checkAuth = [bearerToken(), getToken]
+const checkAuth = [bearerToken(), checkToken]
 
 module.exports = {
   makeToken,
