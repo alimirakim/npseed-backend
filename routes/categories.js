@@ -2,14 +2,17 @@ const catRouter = require('express-promise-router')()
 const { Category, TraitType, Trait } = require('../db/models')
 
 // Fetch only Categories
-catRouter.get("/", async (req, res) => {
-  const categories = await Category.findAll()
-  return res.json(categories)
-})
+// catRouter.get("/", async (req, res) => {
+//   const categories = await Category.findAll()
+//   return res.json(categories)
+// })
 
 // Fetch TraitType/Traits of a Category
-catRouter.get("/:id(\\d+)", async (req, res) => {
-  const category = await Category.findByPk(req.params.id, {
+catRouter.get("/cats/:id(\\d+)", async (req, res) => {
+  const catId = parseInt(req.params.id, 10)
+  console.log("catId int or string?")
+  console.log(typeof catId)
+  const category = await Category.findByPk(catId, {
     include: {
       model: TraitType,
       attributes: ["id", "traitType", "CategoryId"],
@@ -21,7 +24,7 @@ catRouter.get("/:id(\\d+)", async (req, res) => {
   })
   // console.log("\nraw category", category)
   const cleanCat = category.TraitTypes.map(type => {
-    console.log("\ncat traitType", type)
+    // console.log("\ncat traitType", type)
     const traits = type.Traits.map(t => t.trait)
     return {
       catId: req.params.id,
@@ -31,6 +34,8 @@ catRouter.get("/:id(\\d+)", async (req, res) => {
   })
   console.log("\ncleanCat!", cleanCat)
   return res.json(cleanCat)
+  // console.log("what is this??", jsonCat)
+  // return jsonCat
 })
 // EXAMPLE
 // [{
@@ -52,10 +57,10 @@ catRouter.get("/:id(\\d+)", async (req, res) => {
 //   }]
 
 // Fetch Traits by TraitType id
-catRouter.get("/traitType/:id(\\d+)/traits", async (req, res) => {
-  const traits = await Trait.findAll({ where: { TraitTypeId: req.paramsId } })
-  return res.json(traits)
-})
+// catRouter.get("/traitType/:id(\\d+)/traits", async (req, res) => {
+//   const traits = await Trait.findAll({ where: { TraitTypeId: req.paramsId } })
+//   return res.json(traits)
+// })
 
 
 // Fetch all TraitTypes
