@@ -6,8 +6,9 @@ module.exports = {
       {UserId: 1, name: "Lucien Leavitt"},
       {UserId: 1, name: "Rosalyn Reddish"},
       {UserId: 2, name: "Heather Hemlock"},
-      {UserId: 2, name: "Viridian Velvet"},
-      {UserId: 2, name: "Ashen Dawn"},
+      {UserId: 2, name: "Caillin Clay"},
+      {UserId: 2, name: "Delilah Dentata"},
+      {UserId: 4, name: "Oofa"},
     ])
   },
 

@@ -6,7 +6,7 @@ module.exports = {
       { category: "essentials" },
       { category: "appearance" },
       { category: "personality" },
-      { category: "backstory" },
+      { category: "story" },
       { category: "stats" },
     ])
   },

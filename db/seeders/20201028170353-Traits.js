@@ -9,25 +9,69 @@ module.exports = {
       { TraitTypeId: 1, trait: "halfling" },
       { TraitTypeId: 1, trait: "tiefling" },
       { TraitTypeId: 1, trait: "aasimar" },
+      
       { TraitTypeId: 2, trait: "child" },
       { TraitTypeId: 2, trait: "adult" },
       { TraitTypeId: 2, trait: "elder" },
+      
       { TraitTypeId: 3, trait: "boy" }, // 10
       { TraitTypeId: 3, trait: "girl" },
       { TraitTypeId: 3, trait: "neutral" },
       { TraitTypeId: 3, trait: "fluid" },
+      
       { TraitTypeId: 4, trait: "fighter" },
       { TraitTypeId: 4, trait: "noble" },
       { TraitTypeId: 4, trait: "peasant" },
       { TraitTypeId: 4, trait: "merchant" },
-      { TraitTypeId: 7, trait: "black"},
-      { TraitTypeId: 7, trait: "brown"},
-      { TraitTypeId: 7, trait: "red"}, // 20
-      { TraitTypeId: 7, trait: "yellow"},
-      { TraitTypeId: 8, trait: "brown"},
-      { TraitTypeId: 8, trait: "blue"},
-      { TraitTypeId: 8, trait: "green"},
-      { TraitTypeId: 8, trait: "purple"},
+      
+      { TraitTypeId: 5, trait: "black"},
+      { TraitTypeId: 5, trait: "brown"},
+      { TraitTypeId: 5, trait: "red"}, // 20
+      { TraitTypeId: 5, trait: "yellow"},
+      
+      { TraitTypeId: 6, trait: "brown"},
+      { TraitTypeId: 6, trait: "blue"},
+      { TraitTypeId: 6, trait: "green"},
+      { TraitTypeId: 6, trait: "purple"},
+      
+      { TraitTypeId: 7, trait: "pale"},
+      { TraitTypeId: 7, trait: "dark brown"},
+      { TraitTypeId: 7, trait: "light brown"},
+      { TraitTypeId: 7, trait: "peachy"},
+      
+      { TraitTypeId: 8, trait: "bony"},
+      { TraitTypeId: 8, trait: "muscular"},
+      { TraitTypeId: 8, trait: "short"},
+      
+      { TraitTypeId: 9, trait: "polite"},
+      { TraitTypeId: 9, trait: "cruel"},
+      { TraitTypeId: 9, trait: "sweet"},
+      
+      { TraitTypeId: 10, trait: "bites nails"},
+      { TraitTypeId: 10, trait: "walks slowly"},
+      { TraitTypeId: 10, trait: "slight stutter"},
+      { TraitTypeId: 11, trait: "painting"},
+      { TraitTypeId: 11, trait: "coding"},
+      { TraitTypeId: 11, trait: "slaying foes"},
+      { TraitTypeId: 12, trait: "riches"},
+      { TraitTypeId: 12, trait: "love"},
+      
+      { TraitTypeId: 13, trait: "death"},
+      { TraitTypeId: 13, trait: "humiliation"},
+      
+      { TraitTypeId: 14, trait: "killed an innocent person"},
+      { TraitTypeId: 14, trait: "hid treasure in the mountains"},
+      { TraitTypeId: 14, trait: "having an affair with a noble lady"},
+      { TraitTypeId: 21, trait: "Sophia"},
+      { TraitTypeId: 21, trait: "Ashen"},
+      { TraitTypeId: 21, trait: "Dawn"},
+      { TraitTypeId: 21, trait: "Catherine"},
+      { TraitTypeId: 21, trait: "Arthur"},
+      { TraitTypeId: 21, trait: "Bentley Bingsoo Kim"},
+      { TraitTypeId: 21, trait: "Priestess Viridian"},
+      { TraitTypeId: 21, trait: "Jimin"},
+      { TraitTypeId: 21, trait: "Heather Hemlock"},
+      { TraitTypeId: 21, trait: "Hogles"},
       
     ])
   },

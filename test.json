@@ -1,0 +1,53 @@
+[
+  {
+    "catId": "1",
+    "traitType": "race",
+    "traits": [
+      "aasimar",
+      "dragonborn",
+      "halfling",
+      "human",
+      "satyr",
+      "tiefling"
+    ]
+  },
+  {
+    "catId": "1",
+    "traitType": "age",
+    "traits": [
+      "adult",
+      "child",
+      "elder"
+    ]
+  },
+  {
+    "catId": "1",
+    "traitType": "gender",
+    "traits": [
+      "boy",
+      "fluid",
+      "girl",
+      "neutral"
+    ]
+  },
+  {
+    "catId": "1",
+    "traitType": "occupation",
+    "traits": [
+      "fighter",
+      "merchant",
+      "noble",
+      "peasant"
+    ]
+  },
+  {
+    "catId": "1",
+    "traitType": "origin",
+    "traits": []
+  },
+  {
+    "catId": "1",
+    "traitType": "location",
+    "traits": []
+  }
+]
