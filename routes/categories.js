@@ -8,7 +8,7 @@ catRouter.get("/", async (req, res) => {
 })
 
 // Fetch TraitType/Traits of a Category
-catRouter.get("/:id", async (req, res) => {
+catRouter.get("/:id(\\d+)", async (req, res) => {
   const category = Category.findByPk(req.params.id, {
     include: {
       model: TraitType,
@@ -23,7 +23,7 @@ catRouter.get("/:id", async (req, res) => {
 })
 
 // Fetch Traits by TraitType id
-catRouter.get("/traitType/:id/traits", async (req, res) => {
+catRouter.get("/traitType/:id(\\d+)/traits", async (req, res) => {
   const traits = await Trait.findAll({ where: { TraitTypeId: req.paramsId } })
   return res.json(traits)
 })

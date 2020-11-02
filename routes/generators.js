@@ -10,7 +10,7 @@ genRouter.get("/generators", async (req, res) => {
 })
 
 // Fetch a generator and all its details, including all odds
-genRouter.get("/generators/:id", async (req, res) => {
+genRouter.get("/generators/:id(\\d+)", async (req, res) => {
   const generator = await Generator.findByPk(req.params.id, {
     include: [{ model: User, attributes: { exclude: "hashword" } }, TraitChance, Category, TraitType, Trait]
   })
@@ -19,12 +19,12 @@ genRouter.get("/generators/:id", async (req, res) => {
 
 
 // Fetch all the custom generators of a user
-genRouter.get("/users/:id/generators", async (req, res) => {
+genRouter.get("/users/:id(\\d+)/generators", async (req, res) => {
 
 })
 
 // Fetch the GenTraitChances of one Category for a Generator
-genRouter.get("/generators/:genId/categories/:catId/traitChances", async (req, res) => {
+genRouter.get("/generators/:genId(\\d+)/categories/:catId)\\d+)/chances", async (req, res) => {
 
 })
 

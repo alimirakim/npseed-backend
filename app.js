@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser')
 const { ValidationError } = require('sequelize')
 const { environment, origin } = require('./config')
 
-console.log("origin is...\n\n", origin)
 // Route imports
 // const { router, usersRouter, charRouter } = require('./routes')
 const { router } = require('./routes/routes')
@@ -42,6 +41,7 @@ app.use((req, res, next) => {
   next(err)
 })
 
+
 // Handle 404 error
 app.use((err, req, res, next) => {
   if (err.status === 404) {
@@ -54,7 +54,7 @@ app.use((err, req, res, next) => {
 
 // Handle sequelize errors
 app.use((err, req, res, next) => {
-  console.log("we got sequel error", err.errors)
+  // console.log("we got sequel error", err)
   if (err instanceof ValidationError) {
     err.errors = err.errors.map((e) => e.message)
     err.title = "Sequelize Error >:["
@@ -64,7 +64,7 @@ app.use((err, req, res, next) => {
 
 // Handle all other errors
 app.use((err, req, res, next) => {
-  (console.log("we got other error", err.errors))
+  // (console.log("we got other error", err.errors))
   err.status = (err.status || 500)
   const isProduction = environment === 'production'
   res.status(err.status).json({

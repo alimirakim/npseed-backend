@@ -4,25 +4,6 @@ const { User, Character } = require('../db/models')
 const { signupValidators, loginValidators } = require('../validators')
 const { makeToken, checkAuth } = require("../auth")
 
-// Get user by id
-userRouter.get("/:id",
-  // checkAuth,
-  async (req, res) => {
-    const user = await User.findByPk(req.params.id)
-    delete user.hashword
-    if (user) res.json(user)
-    else next(Errors("Couldn't get the User, prolly didn't find it."))
-  }
-)
-// EXAMPLE
-// {
-//   "id": 1,
-//   "username": "admin",
-//   "email": "almyki@gmail.com",
-//   "createdAt": "2020-10-31T17:31:31.870Z",
-//   "updatedAt": "2020-10-31T17:31:31.870Z"
-// }
-
 // Make new user and token
 userRouter.post("/",
   // emailValidator,
@@ -40,7 +21,6 @@ userRouter.post("/",
     } catch (err) {
       next(err)
     }
-
   }
 )
 // EXAMPLE Request Body
@@ -76,11 +56,9 @@ userRouter.put("/token",
   loginValidators,
   async (req, res, next) => {
     const { username, password } = req.body
-    const user = await User.findOne({
-      where: { username },
-      include: Character,
-    })
+    let user = await User.findOne({ where: { username } })
     // Reject request if user doesn't exist or password is invalid
+    console.log("user what?", user.username)
     if (!user || await user.validatePassword(password)) {
       const err = Error("Login big fail")
       err.status = 401
@@ -88,8 +66,12 @@ userRouter.put("/token",
       err.errors = ["The provided credentials are invalid."]
       return next(err)
     }
+    user = await User.findOne({
+      where: { username },
+      include: Character,
+      attributes: { exclude: ["hashword"] }
+    })
     const token = makeToken(user)
-    delete user.hashword
     // TODO Why does Postman show no return?
     res.json({ token, user })
   }
@@ -99,9 +81,9 @@ userRouter.put("/token",
 userRouter.get("/token",
   checkAuth,
   async (req, res) => {
-    if (req.user) res.json(req.user)
-    else {
-      const err = Error("No token no good")
+    if (req.user) {
+      res.json(req.user)
+    } else {
       err.status = 401
       err.title = "401 Token Fail"
       err.errors = ["You need a token to get in!"]
@@ -122,6 +104,23 @@ userRouter.get("/token",
 //   }
 // })
 
-
+// Get user by id
+userRouter.get("/:id(\\d+)",
+  // checkAuth,
+  async (req, res) => {
+    const user = await User.findByPk(req.params.id)
+    delete user.hashword
+    if (user) res.json(user)
+    else next(Errors("Couldn't get the User, prolly didn't find it."))
+  }
+)
+// EXAMPLE
+// {
+//   "id": 1,
+//   "username": "admin",
+//   "email": "almyki@gmail.com",
+//   "createdAt": "2020-10-31T17:31:31.870Z",
+//   "updatedAt": "2020-10-31T17:31:31.870Z"
+// }
 
 module.exports = { userRouter }

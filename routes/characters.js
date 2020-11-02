@@ -6,55 +6,75 @@ const { User, Character, CharTrait, Category, TraitType, Trait } = require('../d
 // Include TraitTypes from Category:id
 // Include Traits of Character from Category:id
 
-charRouter.get("/users/:userId/categories/:catId", async (req, res) => {
+charRouter.get("/users/:userId(\\d+)/categories/:catId(\\d+)", async (req, res) => {
   const userChars = await Character.findAll({
     where: { UserId: req.params.userId },
     include: {
       model: TraitType,
-      where: { CategoryId: req.params.catId },
-      include: {
+      attributes: ["id", "traitType", "CategoryId"],
+      include: [{
+        model: Category,
+        attributes: ["id", "category"],
+      }, {
         model: Trait,
+        attributes: ["id", "trait"],
         include: {
           model: CharTrait,
-          where: { CharacterId: req.params.userId },
           attributes: [],
+          where: { CharacterId: req.params.userId },
         },
-        attributes: ["trait"]
-      },
-      attributes: ["traitType"],
+      }],
     },
-    attributes: ["name"],
   })
-  res.json(userChars)
+  const cleanChars = userChars.map(char => {
+    const { id, UserId, name, createdAt, updatedAt, TraitTypes } = char
+
+    const traits = {}
+
+    for (type of TraitTypes) {
+      const cat = type.Category.category //Id
+      if (type.Traits.length) {
+        traits[cat] = { ...traits[cat], [type.traitType]: type.Traits[0].trait }
+      } else {
+        traits[cat] = { ...traits[cat], [type.traitType]: "" }
+      }
+    }
+
+    const cleanChar = { id, UserId, name, createdAt, updatedAt, traits }
+    return { id, UserId, name, createdAt, updatedAt, traits }
+  })
+  console.log("cleanChars", cleanChars)
+  res.json(cleanChars)
 })
 // Return example for a User's Characters with Traits of a Category included
-// var userChars = [
-//   {
-//     "name": "Rosalyn Reddish",
-//     "TraitTypes": [
-//       {
-//         "traitType": "race",
-//         "Traits": [
-//           {
-//             "trait": "human"
-//           }
-//         ],
-//         "CharTrait": {
-//           "CharacterId": 2,
-//           "TraitId": 6,
-//           "TraitTypeId": 1,
-//           "createdAt": "2020-10-31T17:31:32.046Z",
-//           "updatedAt": "2020-10-31T17:31:32.046Z"
-//         }
-//       }
-//     ]
-//   }
-// ]
+// [{ id: 3,
+//   UserId: 2,
+//   name: 'Heather Hemlock',
+//   createdAt: 2020-10-31T17:31:31.945Z,
+//   updatedAt: 2020-10-31T17:31:31.945Z,
+//   traits: {} }
+
+
+// { id: 4,
+//   UserId: 2,
+//   name: 'Viridian Velvet',
+//   createdAt: 2020-10-31T17:31:31.945Z,
+//   updatedAt: 2020-10-31T17:31:31.945Z,
+//   traits: {} }
+
+
+// { id: 5,
+//   UserId: 2,
+//   name: 'Ashen Dawn',
+//   createdAt: 2020-10-31T17:31:31.945Z,
+//   updatedAt: 2020-10-31T17:31:31.945Z,
+//   traits:
+//    { essentials: { race: 'aasimar', age: '', gender: '', occupation: '' } } }]
 
 
 
 // Fetch a character's full details by id
-charRouter.get("/:id", async (req, res) => {
+charRouter.get("/:id(\\d+)", async (req, res) => {
   const char = await Character.findByPk(req.params.id, {
     include: [
       {
@@ -130,7 +150,7 @@ charRouter.get("/:id", async (req, res) => {
 
 // TODO Another one that I can't work out how to pull with the restrictions I want...
 // Fetch the traits of one category for a character
-charRouter.get("/:id/categories/:catId", async (req, res) => {
+charRouter.get("/:id(\\d+)/categories/:catId(\\d+)", async (req, res) => {
   const charCatTraits = await Trait.findAll({
     attributes: ["id", "trait"],
     include: [{
