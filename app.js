@@ -66,11 +66,14 @@ app.use((err, req, res, next) => {
 app.use((err, req, res, next) => {
   // (console.log("we got other error", err.errors))
   err.status = (err.status || 500)
+  let errors;
+  if (err.errors) errors = err.errors.map(e => e.message)
+  else errors = err.message
   const isProduction = environment === 'production'
   res.status(err.status).json({
     title: err.title || '500 Server Error',
     message: err.message,
-    errors: err.errors,
+    errors: errors,
     stack: isProduction ? null : err.stack,
   })
 })
