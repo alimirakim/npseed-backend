@@ -28,22 +28,28 @@ charRouter.get("/users/:userId(\\d+)/categories/:catId(\\d+)", async (req, res) 
   })
   const cleanChars = userChars.map(char => {
     const { id, UserId, name, createdAt, updatedAt, TraitTypes } = char
-
-    const traits = {}
-
+    const traits = []
+    console.log("\nTraitTypes?", TraitTypes)
     for (type of TraitTypes) {
-      const cat = type.Category.category //Id
       if (type.Traits.length) {
-        traits[cat] = { ...traits[cat], [type.traitType]: type.Traits[0].trait }
+        // console.log("type", type)
+        traits.push({
+          catId: type.CategoryId,
+          traitType: type.traitType,
+          trait: type.Traits[0].trait,
+        })
       } else {
-        traits[cat] = { ...traits[cat], [type.traitType]: "" }
+        traits.push({
+          catId: type.CategoryId,
+          traitType: type.traitType,
+          trait: "",
+        })
       }
     }
-
-    const cleanChar = { id, UserId, name, createdAt, updatedAt, traits }
+    console.log({ id, UserId, name, createdAt, updatedAt, traits })
     return { id, UserId, name, createdAt, updatedAt, traits }
   })
-  console.log("cleanChars", cleanChars)
+  // console.log("cleanChars", cleanChars)
   res.json(cleanChars)
 })
 // Return example for a User's Characters with Traits of a Category included
@@ -79,7 +85,7 @@ charRouter.get("/:id(\\d+)", async (req, res) => {
     include: [
       {
         model: TraitType,
-        attributes: ["id", "traitType"],
+        attributes: ["id", "traitType", "CategoryId"],
         include: [{
           model: Category,
           attributes: ["category"]

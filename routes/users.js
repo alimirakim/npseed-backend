@@ -11,14 +11,22 @@ userRouter.post("/",
   async (req, res, next) => {
     let { username, email, password } = req.body
     if (!email) email = null
-    const hashword = bcrypt.hashSync(password, 10)
+    // TODO WTF This bcrypt uppercase shit
+    console.log("\npassword before hashing?", password)
+    const hashword = await bcrypt.hashSync(password, 10)
+    console.log("\npassword AFTER hashing", password)
     try {
-      const user = await User.create({ username, email, hashword })
-      delete user.hashword
+      await User.create({ username, email, hashword })
+      const user = await User.findOne({
+        where: { username },
+        include: Character,
+        attributes: { exclude: "hashword" }
+      })
       const token = makeToken(user)
       if (user && token) res.status(201).json({ token, user })
       else next(Error("I have no clue why, but the User wasn't made."))
     } catch (err) {
+      console.log("error password", password)
       next(err)
     }
   }

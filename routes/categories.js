@@ -9,18 +9,47 @@ catRouter.get("/", async (req, res) => {
 
 // Fetch TraitType/Traits of a Category
 catRouter.get("/:id(\\d+)", async (req, res) => {
-  const category = Category.findByPk(req.params.id, {
+  const category = await Category.findByPk(req.params.id, {
     include: {
       model: TraitType,
-      attributes: ["id", "traitType"],
+      attributes: ["id", "traitType", "CategoryId"],
       include: {
         model: Trait,
         attributes: ["id", "trait"]
       }
     }
   })
-  return res.json(category)
+  // console.log("\nraw category", category)
+  const cleanCat = category.TraitTypes.map(type => {
+    console.log("\ncat traitType", type)
+    const traits = type.Traits.map(t => t.trait)
+    return {
+      catId: req.params.id,
+      traitType: type.traitType,
+      traits,
+    }
+  })
+  console.log("\ncleanCat!", cleanCat)
+  return res.json(cleanCat)
 })
+// EXAMPLE
+// [{
+//   "catId": "1",
+//   "traitType": "race",
+//   "traits": [
+//     "aasimar",
+//     "human",
+//     "tiefling"
+//   ]
+// }, {
+//     "catId": "1",
+//     "traitType": "age",
+//     "traits": [
+//       "adult",
+//       "child",
+//       "elder"
+//     ]
+//   }]
 
 // Fetch Traits by TraitType id
 catRouter.get("/traitType/:id(\\d+)/traits", async (req, res) => {
