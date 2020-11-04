@@ -1,5 +1,5 @@
 const catRouter = require('express-promise-router')()
-const { Category, TraitType, Trait } = require('../db/models')
+const { Category, TraitType, Trait, TagType, Tag, } = require('../db/models')
 
 // Fetch only Categories
 // catRouter.get("/", async (req, res) => {
@@ -7,11 +7,65 @@ const { Category, TraitType, Trait } = require('../db/models')
 //   return res.json(categories)
 // })
 
+// Fetch all traits
+catRouter.get("/traitTypes", async (req, res) => {
+  const categories = await Category.findAll({
+    attributes: ["id", "category"],
+    include: {
+      model: TraitType,
+      attributes: ["id", "traitType"],
+      include: [
+        {
+          model: TagType,
+          attributes: ["id", "tagType"]
+        }, 
+        {
+          model: Trait,
+          attributes: ["id", "trait"],
+          include: {
+            model: Tag,
+            attributes: ["id", "tag"]
+          }
+        }
+      ]
+    }
+  })
+console.log("\ncategories?", categories)
+  const cleanCats = categories.map(cat => {
+    return {
+      id: cat.id,
+      category: cat.category,
+      traitTypes: cat.TraitTypes.map(traitType => {
+        return {
+          id: traitType.id,
+          type: traitType.type,
+          tagTypes: traitType.TagTypes.map(t => {
+            return {
+              id: t.id,
+              type: t.tagType,
+            }
+          }),
+          traits: traitType.Traits.map(t => {
+            return {
+              id: t.id,
+              trait: t.trait,
+              tags: t.Tags.map(t => {
+                return {
+                  id: t.id,
+                  tag: t.tag,
+                }
+              })
+            }
+          })
+        }
+      })
+    }
+  })
+  return res.json(cleanCats)
+})
+
 // Fetch TraitType/Traits of a Category
-catRouter.get("/cats/:id(\\d+)", async (req, res) => {
-  const catId = parseInt(req.params.id, 10)
-  console.log("catId int or string?")
-  console.log(typeof catId)
+catRouter.get("/:id(\\d+)", async (req, res) => {
   const category = await Category.findByPk(catId, {
     include: {
       model: TraitType,
@@ -22,9 +76,7 @@ catRouter.get("/cats/:id(\\d+)", async (req, res) => {
       }
     }
   })
-  // console.log("\nraw category", category)
   const cleanCat = category.TraitTypes.map(type => {
-    // console.log("\ncat traitType", type)
     const traits = type.Traits.map(t => t.trait)
     return {
       catId: req.params.id,

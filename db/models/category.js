@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.TraitType)
       
       // this.belongsToMany(models.TraitType, {through: 'CatTraitTypes'})
-      this.belongsToMany(models.Trait, {through: 'CatTraits'})
+      // this.belongsToMany(models.Trait, {through: 'CatTraits'})
       // this.belongsToMany(models.CharTrait, {through: 'CatCharTraits'})
     }
   };

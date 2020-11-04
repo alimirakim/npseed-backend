@@ -39,7 +39,7 @@ module.exports = {
       { TraitTypeId: 7, trait: "light brown"},
       { TraitTypeId: 7, trait: "peachy"},
       
-      { TraitTypeId: 8, trait: "bony"},
+      { TraitTypeId: 8, trait: "bony"}, // 30
       { TraitTypeId: 8, trait: "muscular"},
       { TraitTypeId: 8, trait: "short"},
       
@@ -51,27 +51,32 @@ module.exports = {
       { TraitTypeId: 10, trait: "walks slowly"},
       { TraitTypeId: 10, trait: "slight stutter"},
       { TraitTypeId: 11, trait: "painting"},
-      { TraitTypeId: 11, trait: "coding"},
+      { TraitTypeId: 11, trait: "coding"}, // 40
       { TraitTypeId: 11, trait: "slaying foes"},
       { TraitTypeId: 12, trait: "riches"},
       { TraitTypeId: 12, trait: "love"},
       
       { TraitTypeId: 13, trait: "death"},
-      { TraitTypeId: 13, trait: "humiliation"},
+      { TraitTypeId: 13, trait: "humiliation"}, // 45
+      { TraitTypeId: 13, trait: "sickness"},
+      { TraitTypeId: 13, trait: "darkness"},
+      { TraitTypeId: 13, trait: "commitment"},
       
-      { TraitTypeId: 14, trait: "killed an innocent person"},
+      { TraitTypeId: 14, trait: "cheats at every card game"},
+      { TraitTypeId: 14, trait: "remembers their past life"},
+      { TraitTypeId: 14, trait: "killed an innocent person"}, // 50
       { TraitTypeId: 14, trait: "hid treasure in the mountains"},
       { TraitTypeId: 14, trait: "having an affair with a noble lady"},
       { TraitTypeId: 21, trait: "Sophia"},
       { TraitTypeId: 21, trait: "Ashen"},
-      { TraitTypeId: 21, trait: "Dawn"},
+      { TraitTypeId: 21, trait: "Dawn"}, // 55
       { TraitTypeId: 21, trait: "Catherine"},
       { TraitTypeId: 21, trait: "Arthur"},
       { TraitTypeId: 21, trait: "Bentley Bingsoo Kim"},
       { TraitTypeId: 21, trait: "Priestess Viridian"},
-      { TraitTypeId: 21, trait: "Jimin"},
-      { TraitTypeId: 21, trait: "Heather Hemlock"},
-      { TraitTypeId: 21, trait: "Hogles"},
+      { TraitTypeId: 21, trait: "Bora"}, // 60
+      { TraitTypeId: 21, trait: "Sung"},
+      { TraitTypeId: 21, trait: "Sangsook"},
       
     ])
   },

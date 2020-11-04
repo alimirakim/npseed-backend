@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
 
       // TODO Check if this 'through' works.
       // this.belongsToMany(models.Character, { through: models.CharTrait })
+      // this.belongsToMany(models.TagType, {through: models.TagTypesOfTraitTypes})
     }
   };
   TraitType.init({

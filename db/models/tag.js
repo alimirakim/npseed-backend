@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.TagType)
       this.hasMany(models.Chance)
       
-      this.belongsToMany(models.Trait, {through: 'TraitTags'})
+      // this.belongsToMany(models.Trait, {through: models.TraitTag })
     }
   };
   Tag.init({
