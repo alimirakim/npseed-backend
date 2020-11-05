@@ -1,32 +1,86 @@
 const genRouter = require('express-promise-router')()
-const { User, Generator, TraitChance, TraitType, Trait, Category} = require('../db/models')
+const { User, Generator, TagTypeChance, TagType, Chance, Tag, } = require('../db/models')
 
 // *****************************************************************************
 // Generators
 
-genRouter.get("/generators", async (req, res) => {
-  const generators = await Generator.findAll()
-  return res.json(generators)
-})
+
 
 // Fetch a generator and all its details, including all odds
-genRouter.get("/generators/:id(\\d+)", async (req, res) => {
+genRouter.get("/chances/:id(\\d+)", async (req, res) => {
   const generator = await Generator.findByPk(req.params.id, {
-    include: [{ model: User, attributes: { exclude: "hashword" } }, TraitChance, Category, TraitType, Trait]
+    attributes: ["id", "title"],
+    include: [
+      {
+        model: User,
+        attributes: { exclude: "hashword" }
+      }, {
+        model: TagTypeChance,
+        attributes: ["id", "chanceLock"],
+        include: [
+          {
+            model: TagType,
+            attributes: ["id", "tagType"],
+            include: {
+              model: Tag,
+              attributes: ["id", "tag"],
+              include: {
+                model: Chance,
+                attributes: ["id", "chance"],
+              }
+            }
+          }
+        ]
+      }
+    ]
   })
-  return res.json(generator)
+
+  const cleanTagTypes = generator.TagTypeChances.map(ttc => {
+    return {
+      id: ttc.id,
+      chanceLock: ttc.chanceLock,
+      typeId: ttc.TagType.id,
+      type: ttc.TagType.tagType,
+      chances: ttc.TagType.Tags.map(tagChances => {
+        return {
+          tagId: tagChances.id,
+          tag: tagChances.tag,
+          chanceId: tagChances.Chances[0].id,
+          chance: tagChances.Chances[0].chance,
+        }
+      })
+    }
+  })
+  const cleanGen = {
+    id: generator.id,
+    title: generator.title,
+    user: generator.User,
+    tagTypeChances: cleanTagTypes,
+  }
+
+  return res.json(cleanGen)
 })
 
+// state.generator.tagTypes[0].chances[0].trait
+// state.generator.tagTypes[0].chances[0].chance
+
+
+
+
+// genRouter.get("/generators", async (req, res) => {
+//   const generators = await Generator.findAll()
+//   return res.json(generators)
+// })
 
 // Fetch all the custom generators of a user
-genRouter.get("/users/:id(\\d+)/generators", async (req, res) => {
+// genRouter.get("/users/:id(\\d+)/generators", async (req, res) => {
 
-})
+// })
 
 // Fetch the GenTraitChances of one Category for a Generator
-genRouter.get("/generators/:genId(\\d+)/categories/:catId)\\d+)/chances", async (req, res) => {
+// genRouter.get("/generators/:genId(\\d+)/categories/:catId)\\d+)/chances", async (req, res) => {
 
-})
+// })
 
 // TODO same deal...
 // Fetch the odds for one trait type of a generator
@@ -35,4 +89,4 @@ genRouter.get("/generators/:genId(\\d+)/categories/:catId)\\d+)/chances", async 
 //   return res.json(traitChances)
 // })
 
-module.exports = genRouter
+module.exports = { genRouter }

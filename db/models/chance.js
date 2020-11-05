@@ -8,11 +8,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsTo(models.Generator)
       this.belongsTo(models.Tag)
+      // this.belongsToMany(models.TagTypeChance, { through: "TagTypes" })
+      this.belongsToMany(models.TagType, { through: "GenTagTypes" })
     }
   }
 
   Chance.init({
-    GenId: {
+    GeneratorId: {
       allowNull: false,
       type: DataTypes.INTEGER,
     },

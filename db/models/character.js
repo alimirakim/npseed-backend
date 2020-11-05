@@ -6,11 +6,11 @@ module.exports = (sequelize, DataTypes) => {
   class Character extends Model {
 
     static associate(models) {
-      this.hasMany(models.CharTrait)
+      this.hasMany(models.Trait)
       this.belongsTo(models.User)
 
-      // this.belongsToMany(models.Trait, { through: models.CharTrait })
-      // this.belongsToMany(models.TraitType, {through: models.CharTrait})
+      this.belongsToMany(models.Trait, { through: "CharTraits" })
+      this.belongsToMany(models.TraitType, {through: "CharTraits"})
     }
   };
   Character.init({

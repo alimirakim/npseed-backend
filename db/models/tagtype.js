@@ -7,8 +7,10 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       this.hasMany(models.Tag)
-      // this.belongsToMany(models.TraitType, {through: models.TagTypesOfTraitTypes})
-      // this.belongsToMany(models.Chance, { through: 'TagTypeChances' })
+      this.hasMany(models.TagTypeChance)
+
+      this.belongsToMany(models.TraitType, { through: "TagTypesOfTraitTypes" })
+      this.belongsToMany(models.Chance, { through: "GenTagTypes" })
     }
   };
   TagType.init({

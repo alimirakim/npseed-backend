@@ -7,13 +7,18 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       this.hasMany(models.Chance)
+      this.hasMany(models.TagTypeChance)
+      this.belongsTo(models.User)
     }
   };
   Generator.init({
     title: {
       allowNull: false,
-      validate: {notEmpty: true},
+      validate: { notEmpty: true },
       type: DataTypes.STRING(250),
+    },
+    UserId: {
+      type: DataTypes.INTEGER,
     }
   }, {
     sequelize,

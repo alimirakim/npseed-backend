@@ -4,7 +4,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert("Generators", [
       { title: "True Random" },
-      { title: "Default" },
+      { title: "Earthy", UserId: 1 },
     ])
   },
 

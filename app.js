@@ -11,6 +11,7 @@ const { router } = require('./routes/routes')
 const { userRouter } = require('./routes/users')
 const { charRouter } = require('./routes/characters')
 const { catRouter } = require('./routes/categories')
+const { genRouter } = require('./routes/generators')
 // TODO Why can't this work even if .config can
 // const charRoutes = require('./routes')
 
@@ -31,6 +32,7 @@ app.use(router)
 app.use("/characters", charRouter)
 app.use("/users", userRouter)
 app.use("/categories", catRouter)
+app.use("/generators", genRouter)
 
 
 // 404 Catch unhandled requests and pass to error handler

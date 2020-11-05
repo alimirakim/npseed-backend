@@ -30,22 +30,22 @@ catRouter.get("/traitTypes", async (req, res) => {
       ]
     }
   })
-console.log("\ncategories?", categories)
+// console.log("\ncategories?", categories[0].TraitTypes[0])
   const cleanCats = categories.map(cat => {
     return {
       id: cat.id,
       category: cat.category,
-      traitTypes: cat.TraitTypes.map(traitType => {
+      traitTypes: cat.TraitTypes.map(t => {
         return {
-          id: traitType.id,
-          type: traitType.type,
-          tagTypes: traitType.TagTypes.map(t => {
+          id: t.id,
+          type: t.traitType,
+          tagTypes: t.TagTypes.map(t => {
             return {
               id: t.id,
               type: t.tagType,
             }
           }),
-          traits: traitType.Traits.map(t => {
+          traits: t.Traits.map(t => {
             return {
               id: t.id,
               trait: t.trait,

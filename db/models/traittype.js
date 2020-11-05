@@ -7,12 +7,11 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       this.hasMany(models.Trait)
-      this.hasMany(models.CharTrait)
+      this.hasMany(models.Character)
       this.belongsTo(models.Category)
-
       // TODO Check if this 'through' works.
-      // this.belongsToMany(models.Character, { through: models.CharTrait })
-      // this.belongsToMany(models.TagType, {through: models.TagTypesOfTraitTypes})
+      this.belongsToMany(models.Character, { through: "CharTraits" })
+      this.belongsToMany(models.TagType, {through: "TagTypesOfTraitTypes"})
     }
   };
   TraitType.init({

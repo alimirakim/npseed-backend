@@ -62,7 +62,6 @@ module.exports = {
       { TraitTypeId: 13, trait: "darkness"},
       { TraitTypeId: 13, trait: "commitment"},
       
-      { TraitTypeId: 14, trait: "cheats at every card game"},
       { TraitTypeId: 14, trait: "remembers their past life"},
       { TraitTypeId: 14, trait: "killed an innocent person"}, // 50
       { TraitTypeId: 14, trait: "hid treasure in the mountains"},
