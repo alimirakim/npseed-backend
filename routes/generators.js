@@ -4,8 +4,6 @@ const { User, Generator, TagTypeChance, TagType, Chance, Tag, } = require('../db
 // *****************************************************************************
 // Generators
 
-
-
 // Fetch a generator and all its details, including all odds
 genRouter.get("/chances/:id(\\d+)", async (req, res) => {
   const generator = await Generator.findByPk(req.params.id, {
@@ -57,7 +55,7 @@ genRouter.get("/chances/:id(\\d+)", async (req, res) => {
     user: generator.User,
     tagTypeChances: cleanTagTypes,
   }
-
+console.log("\n\nGENERATOR?!", cleanGen)
   return res.json(cleanGen)
 })
 

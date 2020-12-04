@@ -8,6 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      chanceLock: {
+        allowNull: false,
+        type: Sequelize.FLOAT,
+        defaultValue: 0.01,
+      },
       GeneratorId: {
         allowNull: false,
         type: Sequelize.INTEGER,
@@ -18,11 +23,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: { model: "TagTypes" },
       },
-      chanceLock: {
-        allowNull: false,
-        type: Sequelize.FLOAT,
-        defaultValue: 0.01,
-      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
