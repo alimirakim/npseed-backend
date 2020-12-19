@@ -1,11 +1,77 @@
 const catRouter = require('express-promise-router')()
 const { Category, TraitType, Trait, TagType, Tag, } = require('../db/models')
+const {   
+  normalizeCategory,
+  normalizeTraitType,
+  normalizeTrait,
+  normalizeTagType,
+} = require("./utils")
 
 // Fetch only Categories
 // catRouter.get("/", async (req, res) => {
 //   const categories = await Category.findAll()
 //   return res.json(categories)
 // })
+
+
+
+
+
+catRouter.get("/categoriesTraitTypesTraits", async (req, res) => {
+  let queriedCategories;
+  let queriedTagTypes;
+
+  await (() => {
+    queriedCategories = Category.findAll({
+      attributes: ["id", "category"],
+      include: {
+        model: TraitType,
+        attributes: ["id", "traitType"],
+        include: [
+          { model: TagType, attributes: ["id"] },
+          {
+            model: Trait,
+            attributes: ["id", "trait"],
+            include: { model: Tag, attributes: ["id"] }
+          }
+        ]
+      }
+    })
+
+    queriedTagTypes = TagType.findAll({
+      attributes: ["id", "tagType"],
+      include: [ {model: Tag, attributes: ["id", "tag"]} ]
+    })
+  })()
+
+  categories = {}
+  traitTypes = {}
+  traits = {}
+
+  queriedCategories.forEach(cat => {
+    categories[cat.id] = normalizeCategory(cat)
+    cat.TraitTypes.forEach(traitT => {
+      traitTypes[traitT.id] = normalizeTraitType(traitT)
+      traitT.Traits.forEach(trait => {
+        traits[trait.id] = normalizeTrait(trait)
+      })
+    })
+  })
+
+  tagTypes = {}
+  tags = {}
+
+  queriedTagTypes.forEach(tagT => {
+    tagTypes[tagT.id] = normalizeTagType(tagT)
+    tagT.tags.forEach(t => tags[t.id] = t)
+  })
+
+  console.log("\n\ncategories?", { categories, traitTypes, traits, tagTypes, tags })
+  return res.json({ categories, traitTypes, traits, tagTypes, tags })
+})
+
+
+
 
 // Fetch all traits
 catRouter.get("/traitTypes", async (req, res) => {
@@ -18,7 +84,7 @@ catRouter.get("/traitTypes", async (req, res) => {
         {
           model: TagType,
           attributes: ["id", "tagType"]
-        }, 
+        },
         {
           model: Trait,
           attributes: ["id", "trait"],
@@ -30,7 +96,6 @@ catRouter.get("/traitTypes", async (req, res) => {
       ]
     }
   })
-// console.log("\ncategories?", categories[0].TraitTypes[0])
   const cleanCats = categories.map(cat => {
     return {
       id: cat.id,
@@ -61,7 +126,8 @@ catRouter.get("/traitTypes", async (req, res) => {
       })
     }
   })
-  return res.json(cleanCats)
+  console.log("\ncategories?", cleanCats[1])
+  return res.json("f")
 })
 
 // Fetch TraitType/Traits of a Category

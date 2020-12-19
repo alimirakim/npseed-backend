@@ -20,6 +20,7 @@ const app = express()
 // Setting up backend app
 app.use(morgan('dev'))
 app.use(cors({ origin }))
+app.use(cors({ origin: 'http://localhost:3001' }))
 app.use(cookieParser())
 app.use(express.json())
 // TODO Check how these work out. Diff between Twitter/Pokemon, understand why
