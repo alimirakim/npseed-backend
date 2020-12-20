@@ -1,6 +1,6 @@
 const catRouter = require('express-promise-router')()
 const { Category, TraitType, Trait, TagType, Tag, } = require('../db/models')
-const {   
+const {
   normalizeCategory,
   normalizeTraitType,
   normalizeTrait,
@@ -14,40 +14,33 @@ const {
 // })
 
 
+catRouter.get("/all", async (req, res) => {
 
+  const queriedCategories = await Category.findAll({
+    attributes: ["id", "category"],
+    include: {
+      model: TraitType,
+      attributes: ["id", "traitType"],
+      include: [
+        { model: TagType, attributes: ["id"] },
+        {
+          model: Trait,
+          attributes: ["id", "trait"],
+          include: { model: Tag, attributes: ["id"] }
+        }
+      ]
+    }
+  })
 
-
-catRouter.get("/categoriesTraitTypesTraits", async (req, res) => {
-  let queriedCategories;
-  let queriedTagTypes;
-
-  await (() => {
-    queriedCategories = Category.findAll({
-      attributes: ["id", "category"],
-      include: {
-        model: TraitType,
-        attributes: ["id", "traitType"],
-        include: [
-          { model: TagType, attributes: ["id"] },
-          {
-            model: Trait,
-            attributes: ["id", "trait"],
-            include: { model: Tag, attributes: ["id"] }
-          }
-        ]
-      }
-    })
-
-    queriedTagTypes = TagType.findAll({
-      attributes: ["id", "tagType"],
-      include: [ {model: Tag, attributes: ["id", "tag"]} ]
-    })
-  })()
+  const queriedTagTypes = await TagType.findAll({
+    attributes: ["id", "tagType"],
+    include: [{ model: Tag, attributes: ["id", "tag", "TagTypeId"] }]
+  })
 
   categories = {}
   traitTypes = {}
   traits = {}
-
+  console.log("\n\nQUERIED CATEGORIES", queriedCategories)
   queriedCategories.forEach(cat => {
     categories[cat.id] = normalizeCategory(cat)
     cat.TraitTypes.forEach(traitT => {
@@ -63,10 +56,10 @@ catRouter.get("/categoriesTraitTypesTraits", async (req, res) => {
 
   queriedTagTypes.forEach(tagT => {
     tagTypes[tagT.id] = normalizeTagType(tagT)
-    tagT.tags.forEach(t => tags[t.id] = t)
+    tagT.Tags.forEach(t => tags[t.id] = t)
   })
 
-  console.log("\n\ncategories?", { categories, traitTypes, traits, tagTypes, tags })
+  console.log("\n\ncategories?", { categories })//, traitTypes, traits, tagTypes, tags })
   return res.json({ categories, traitTypes, traits, tagTypes, tags })
 })
 

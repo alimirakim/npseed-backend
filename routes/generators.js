@@ -1,62 +1,53 @@
 const genRouter = require('express-promise-router')()
-const { User, Generator, TagTypeChance, TagType, Chance, Tag, } = require('../db/models')
+const { Generator, TagTypeChance, TagType, Chance, Tag, } = require('../db/models')
 
 // *****************************************************************************
 // Generators
 
 // Fetch a generator and all its details, including all odds
 genRouter.get("/chances/:id(\\d+)", async (req, res) => {
-  const generator = await Generator.findByPk(req.params.id, {
+  console.log("\n\nGETTING GEN...")
+
+  const queriedGenerator = await Generator.findByPk(req.params.id, {
     attributes: ["id", "title"],
-    include: [
-      {
-        model: User,
-        attributes: { exclude: "hashword" }
-      }, {
-        model: TagTypeChance,
-        attributes: ["id", "chanceLock"],
-        include: [
-          {
-            model: TagType,
-            attributes: ["id", "tagType"],
+    include: [{
+      model: TagTypeChance,
+      attributes: ["id", "chanceLock"],
+      include: [
+        {
+          model: TagType,
+          attributes: ["id"],
+          include: {
+            model: Tag,
+            attributes: ["id"],
             include: {
-              model: Tag,
-              attributes: ["id", "tag"],
-              include: {
-                model: Chance,
-                attributes: ["id", "chance"],
-              }
+              model: Chance,
+              attributes: ["id", "chance"],
             }
           }
-        ]
-      }
-    ]
+        }
+      ]
+    }]
   })
 
-  const cleanTagTypes = generator.TagTypeChances.map(ttc => {
-    return {
+  const generator = {
+    id: queriedGenerator.id,
+    title: queriedGenerator.title,
+  }
+  const tagTypeChances = {}
+
+  queriedGenerator.TagTypeChances.forEach(ttc => {
+    tagTypeChances[ttc.TagType.id] = {
       id: ttc.id,
       chanceLock: ttc.chanceLock,
-      typeId: ttc.TagType.id,
-      type: ttc.TagType.tagType,
-      chances: ttc.TagType.Tags.map(tagChances => {
-        return {
-          tagId: tagChances.id,
-          tag: tagChances.tag,
-          chanceId: tagChances.Chances[0].id,
-          chance: tagChances.Chances[0].chance,
-        }
-      })
+      tagTypeId: ttc.TagType.id,
+      tagChances: ttc.TagType.Tags.map(t => ({ tag_id: t.id, chance: t.Chance.chance })),
     }
   })
-  const cleanGen = {
-    id: generator.id,
-    title: generator.title,
-    user: generator.User,
-    tagTypeChances: cleanTagTypes,
-  }
-console.log("\n\nGENERATOR?!", cleanGen)
-  return res.json(cleanGen)
+  generator.tagTypeChanceIds = Object.keys(tagTypeChances).map(k => Number(k))
+
+  console.log("\n\nGENERATOR?!", generator)
+  return res.json({ generator, tagTypeChances })
 })
 
 // state.generator.tagTypes[0].chances[0].trait
