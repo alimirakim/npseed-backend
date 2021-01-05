@@ -13,6 +13,27 @@ const {
 //   return res.json(categories)
 // })
 
+// const nameKey = "al860180991"
+// https://www.behindthename.com/api/random.json?usage=fairy&key=al860180991
+// https://www.behindthename.com/api/lookup.json?name=mira&key=al860180991
+// catRouter.get("/name", async (req, res) => {
+//   const appTagIds = await req.json()
+//   let gender, usage;
+//   appTagIds.includes(1) ? gender = `&gender=m` : gender = `&gender=f`
+  
+//   const usage = `usage=${u}`
+// const gender = `&gender=${g}`
+  
+//   const resName = await fetch(`https://www.behindthename.com/api/random.json?${usage}${gender}&key=${nameKey}`)
+//   if (resName.ok) {
+//     const name = await resName.json()
+//     console.log("fetched name", name)
+//     return res.json(name)
+//   } else {
+//     return {error: "Name fetch failed"}
+//   }
+// })
+
 
 catRouter.get("/all", async (req, res) => {
 

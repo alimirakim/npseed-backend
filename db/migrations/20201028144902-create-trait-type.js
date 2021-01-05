@@ -17,6 +17,17 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: { model: 'Categories' },
       },
+      description: {
+        type: Sequelize.STRING(),
+      },
+      color: {
+        type: Sequelize.STRING(50),
+        defaultValue: "rgb(70,60,70)",
+      },
+      icon: {
+        type: Sequelize.STRING(50),
+        defaultValue: "user-edit",
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

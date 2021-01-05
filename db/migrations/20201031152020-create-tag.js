@@ -18,6 +18,17 @@ module.exports = {
         references: { model: 'TagTypes' },
         type: Sequelize.INTEGER,
       },
+      description: {
+        type: Sequelize.STRING(),
+      },
+      color: {
+        type: Sequelize.STRING(50),
+        defaultValue: "rgb(70,60,70)",
+      },
+      icon: {
+        type: Sequelize.STRING(50),
+        defaultValue: "tag",
+      },
       createdAt: {
         allowNull: false,
         defaultValue: new Date(),

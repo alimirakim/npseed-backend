@@ -11,7 +11,18 @@ module.exports = {
       tagType: {
         allowNull: false,
         unique: true,
-        type: Sequelize.STRING(250),
+        type: Sequelize.STRING(50),
+      },
+      description: {
+        type: Sequelize.STRING(),
+      },
+      color: {
+        type: Sequelize.STRING(50),
+        defaultValue: "rgb(70,60,70)",
+      },
+      icon: {
+        type: Sequelize.STRING(50),
+        defaultValue: "tags",
       },
       createdAt: {
         allowNull: false,

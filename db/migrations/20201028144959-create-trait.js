@@ -10,12 +10,23 @@ module.exports = {
       },
       trait: {
         allowNull: false,
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(50),
       },
       TraitTypeId: {
         allowNull: false,
         references: { model: 'TraitTypes' },
         type: Sequelize.INTEGER,
+      },
+      description: {
+        type: Sequelize.STRING(),
+      },
+      color: {
+        type: Sequelize.STRING(50),
+        defaultValue: "rgb(70,60,70)",
+      },
+      icon: {
+        type: Sequelize.STRING(50),
+        defaultValue: "dna",
       },
       createdAt: {
         allowNull: false,

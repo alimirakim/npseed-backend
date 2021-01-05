@@ -5,9 +5,11 @@ module.exports = {
         await queryInterface.bulkInsert('Categories', [
             { category: "essentials" },
             { category: "appearance" },
+            { category: "attire" },
             { category: "personality" },
             { category: "story" },
-            // { category: "stats" },
+            { category: "assets" },
+            { category: "stats" },
         ])
     },
 

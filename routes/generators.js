@@ -37,13 +37,20 @@ genRouter.get("/chances/:id(\\d+)", async (req, res) => {
   const tagTypeChances = {}
 
   queriedGenerator.TagTypeChances.forEach(ttc => {
-    tagTypeChances[ttc.TagType.id] = {
-      id: ttc.id,
-      chanceLock: ttc.chanceLock,
-      tagTypeId: ttc.TagType.id,
-      tagChances: ttc.TagType.Tags.map(t => ({ tag_id: t.id, chance: t.Chance.chance })),
+    try {
+
+      console.log("\ntagTypeChance", ttc.id)
+      tagTypeChances[ttc.TagType.id] = {
+        id: ttc.id,
+        chanceLock: ttc.chanceLock,
+        tagTypeId: ttc.TagType.id,
+        tagChances: ttc.TagType.Tags.map(t => ({ tag_id: t.id, chance: t.Chance.chance })),
+      }
+    } catch (e) {
+      console.error("CATCH", e)
     }
   })
+  console.log("\n\nQUERIED GENERATOR?!", queriedGenerator)
   generator.tagTypeChanceIds = Object.keys(tagTypeChances).map(k => Number(k))
 
   console.log("\n\nGENERATOR?!", generator)
@@ -63,7 +70,7 @@ genRouter.get("/chances/:id(\\d+)", async (req, res) => {
 
 // Fetch all the custom generators of a user
 // genRouter.get("/users/:id(\\d+)/generators", async (req, res) => {
-
+// 
 // })
 
 // Fetch the GenTraitChances of one Category for a Generator
